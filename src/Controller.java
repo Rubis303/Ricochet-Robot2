@@ -1,7 +1,11 @@
- import javafx.scene.layout.Pane;
+ import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import java.io.IOException;
+
+
 
 public class Controller {
 	AffichagePlateau plateau;
@@ -11,13 +15,16 @@ public class Controller {
 	GameMenu menu;
 	MenuInGame menuJeu;
 	String selectionRobot;
-		Controller(Plateau p,Timer sablier,Pane root,AffichagePlateau plateau,GameMenu menu ,MenuInGame menuJeu ) {
+	Text titre;
+	
+		Controller(Plateau p,Timer sablier,Pane root,AffichagePlateau plateau,GameMenu menu ,MenuInGame menuJeu,Text t) {
 			this.menuJeu = menuJeu;
 			this.plateau = plateau;
 			this.p = p;
 			this.sablier = sablier;
 			this.root = root;
 			this.menu = menu;
+			this.titre=t;
 			
 		}
 		public void controllerMain(){
@@ -78,28 +85,54 @@ public class Controller {
             		System.out.println("je me déplace vers le haut");
 					//plateau.getPlateau().deplacementHaut();
             	    p.deplacementr(p.getSelection(),plateau,"H");
+            	    try {
+						this.afficherGagner();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
             	if(keyEvent.getText().equals("s")) {
             		System.out.println("je me déplace vers le bas");
 						//plateau.getPlateau().deplacementBas();
             		 p.deplacementr(p.getSelection(),plateau,"B");
+            		 try {
+ 						this.afficherGagner();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
 				}
             	if(keyEvent.getText().equals("d")) {
             		System.out.println("je me déplace vers la droite");
 						//plateau.getPlateau().deplacementdroite();
             		 p.deplacementr(p.getSelection(),plateau,"D");
+            		 try {
+ 						this.afficherGagner();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
 				}
             	if(keyEvent.getText().equals("q")) {
             		System.out.println("je me déplace vers la gauche");
 						//plateau.getPlateau().deplacementgauche();
             		 p.deplacementr(p.getSelection(),plateau,"G");
+            		 try {
+						this.afficherGagner();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
             	
             });
 			menu.getStart().setOnMouseClicked(event ->{
+				titre.setTranslateX(800);
 				menuJeu.setVisible(true);
 				plateau.setVisible(true);
 				menu.setVisible(false);
+				
 	  		});
 			menuJeu.getSSablier().setOnMouseClicked(event ->{
 	  			sablier.startTimer();
@@ -109,6 +142,46 @@ public class Controller {
 	  		menuJeu.getFSablier().setOnMouseClicked(event ->{
 		  			sablier.checkTimer();
 		  		});
+	  		menuJeu.getDebutPartie().setOnMouseClicked(event ->{
+	  			menuJeu.getDebutPartie().getText().setText("Partie en cours");
+	  			Case obj=p.getObjectif();
+	  			String cible=obj.MaCible();
+	  			try {
+					ImageView imgC = ImageBuilder.imageCible(cible);
+					imgC.setFitHeight(40);//hauteur
+					imgC.setFitWidth(60);//largeur
+					imgC.setTranslateX(100); //800
+					imgC.setTranslateY(400);
+					this.root.getChildren().addAll(imgC);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	  			
+	  			
+	  		});
+	  	
 	  		
+	  		
+		}
+		public void afficherGagner() throws IOException{
+			if(p.getCase(p.getSelection().getCoordonneeX(),p.getSelection().getCoordonneeY()).equals(p.getObjectif())){
+				Text t=TextBuilder.objectif();
+				t.setTranslateX(10);
+			  	t.setTranslateY(400);
+			  	
+				Button gagner = new Button("Nouveau tour");
+				gagner.setTranslateX(10);
+			  	gagner.setTranslateY(350);
+			  	root.getChildren().addAll(t,gagner);
+			  	
+			}
+			/*
+			Text depl = TextBuilder.deplacement(p.getNbDeplacement());
+			depl.setTranslateX(5);
+			depl.setTranslateY(300);
+			this.root.getChildren().addAll(depl);*/
+			menuJeu.getDeplacement().setText(""+p.getNbDeplacement());
 		}
 }

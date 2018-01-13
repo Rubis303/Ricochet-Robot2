@@ -19,7 +19,7 @@ public class AffichagePlateau extends StackPane {
 		Image img = new Image(Acceuil);
 		Acceuil.close();
 		ImageView imgV = new ImageView(img);
-		imgV.setFitHeight(720);
+		imgV.setFitHeight(720);// RESO NORMAL :720. 1080  CHANGE LA TAILLE DE LIMAGE DU PLATEAU.. RESO PETITE : 480 720
 		imgV.setFitWidth(1080);
 		double posYcase = 0;
 		double posXcase = 0;

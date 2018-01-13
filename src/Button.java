@@ -10,6 +10,7 @@ import javafx.scene.transform.Rotate;
 
 
 public  class Button extends StackPane{
+	Text text;
 		  public Button(String name) throws IOException{
 			  final PhongMaterial material = new PhongMaterial(Color.GREY); 
 			  final Box rt = new Box(250, 30, 50);
@@ -18,7 +19,8 @@ public  class Button extends StackPane{
 			  texture.close();
 			  final PhongMaterial material = new PhongMaterial(Color.WHITE, diffuseMap, null, null, null);*/  
 			  rt.setRotationAxis(Rotate.Y_AXIS); 
-			  Text text = new Text(name);
+			  Text t = new Text(name);
+			  this.text=t;
 			  text.setFont(Font.font(20));
 			  text.setFill(Color.WHITE);
 			  text.setRotationAxis(Rotate.Y_AXIS);
@@ -28,12 +30,17 @@ public  class Button extends StackPane{
 			  
 			  setOnMouseEntered(event -> {
 				 // rt.setMaterial(new PhongMaterial(Color.BLUE));
-				  text.setFill(Color.BLACK);
+				//text.setFill(Color.BLACK);
+				  text.setFont(Font.font(25));
 			  });
 			  setOnMouseExited(event -> {
 				  //rt.setMaterial(new PhongMaterial(Color.GREY));
-				  text.setFill(Color.WHITE);
+				  //text.setFill(Color.WHITE);
+				  text.setFont(Font.font(20));
 			  });
 			  
+		  }
+		  public Text getText(){
+			  return text;
 		  }
 	  }

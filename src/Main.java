@@ -37,18 +37,18 @@ public class Main extends Application {
 			plateau.setTranslateY(100);
 			//POSITIONNE ET AFFICHE TITRE ETC
 	  		Text titre = TextBuilder.titreFenetre();
-			titre.setTranslateX(700);
-			titre.setTranslateY(100);
+			titre.setTranslateX(380);//700
+			titre.setTranslateY(80);//100
 			imgV.setFitHeight(1080);
 			imgV.setFitWidth(1920);
-			root.setPrefSize(1920,1080);
+			root.setPrefSize(1500,1000);//1920,1080
 			// POSITIONNE LE PLATEAU SUR L'AFFICHAGE
-			plateau.setTranslateX(800);
+			plateau.setTranslateX(400); //800
 			plateau.setTranslateY(200);
 			
-			Controller controller = new Controller(p,sablier,root,plateau,gamemenu, menuJeu);
+			Controller controller = new Controller(p,sablier,root,plateau,gamemenu, menuJeu,titre);
 			controller.controllerMain();
-			root.getChildren().addAll(imgV,plateau,menuJeu,gamemenu, moption, titre);		
+			root.getChildren().addAll(imgV,plateau,menuJeu,gamemenu, moption, titre);	
 			Scene scene = new Scene(root);
 			menu.setScene(scene);
 			menu.show();

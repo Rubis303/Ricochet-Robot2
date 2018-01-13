@@ -80,7 +80,7 @@ public class Plateau {
 
 		plateau[15][0].ajoutRobot(rouge);
 		plateau[5][3].ajoutRobot(bleu);
-		plateau[12][3].ajoutRobot(jaune);
+		plateau[0][0].ajoutRobot(jaune);
 		plateau[6][12].ajoutRobot(vert);
 		
 		
@@ -95,7 +95,7 @@ public class Plateau {
 		int higher = 17;
 		int random = (int)(Math.random() * (higher-lower)) + lower;
 		//this.objectif = ""+random;
-		this.objectif = plateau[14][11];
+		this.objectif = plateau[5][1];
 		//System.out.println(this.objectif);
 
 	}

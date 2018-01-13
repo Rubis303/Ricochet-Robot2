@@ -72,52 +72,52 @@ public class ImageBuilder {
     }
     public static ImageView imageCible(String s) throws IOException {
     	InputStream off;
-    	if(s.equals("1")) {
+    	if(s.equals("17")) {
     		 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible1.png"));
     	}
-    	else if(s.equals("2")) {
+    	else if(s.equals("16")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible2.png"));
         	}
-    	else if(s.equals("3")) {
+    	else if(s.equals("14")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible3.png"));
         	}
-    	else if(s.equals("4")) {
+    	else if(s.equals("15")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible4.png"));
         	}
-    	else if(s.equals("5")) {
+    	else if(s.equals("12")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible5.png"));
         	}
-    	else if(s.equals("6")) {
+    	else if(s.equals("13")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible6.png"));
         	}
-    	else if(s.equals("7")) {
+    	else if(s.equals("11")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible7.png"));
         	}
-    	else if(s.equals("8")) {
+    	else if(s.equals("10")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible8.png"));
         	}
     	else if(s.equals("9")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible9.png"));
         	}
-    	else if(s.equals("10")) {
+    	else if(s.equals("7")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible10.png"));
         	}
-    	else if(s.equals("11")) {
+    	else if(s.equals("8")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible11.png"));
         	}
-    	else if(s.equals("12")) {
+    	else if(s.equals("5")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible12.png"));
         	}
-    	else if(s.equals("13")) {
+    	else if(s.equals("6")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible13.png"));
         	}
-    	else if(s.equals("14")) {
+    	else if(s.equals("4")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible14.png"));
         	}
-    	else if(s.equals("15")) {
+    	else if(s.equals("3")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible15.png"));
         	}
-    	else if(s.equals("16")) {
+    	else if(s.equals("1")) {
         	 off = Files.newInputStream(Paths.get("./ressources/images/Cible/cible16.png"));
         	}
     	else  {

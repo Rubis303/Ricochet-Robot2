@@ -18,8 +18,10 @@ public class MenuInGame extends Parent {
 	ButtonInGame quitter;
 	Button startSablier;
 	Button finSablier;
+	Button debut;
 	Pane root;
 	Plateau p;
+	Text deplacement;
 	ChoiceBox<String> boxrobot = new ChoiceBox<>();
 		public MenuInGame(AffichagePlateau plateau,Plateau pl) throws IOException {
 			Pane root = new Pane();
@@ -40,6 +42,10 @@ public class MenuInGame extends Parent {
 	  		//ImageView imgCible = ImageBuilder.imageCible(this.plateau.getPlateau().getObjectif());
 	  		Text cibleT = TextBuilder.menuCible();
 	  		Text robotchoix = TextBuilder.robotchoix();
+	  		deplacement = TextBuilder.deplacement(p.getNbDeplacement());
+			deplacement.setTranslateX(5);
+			deplacement.setTranslateY(300);
+		
 			//imgCible.setFitHeight(50);
 			//imgCible.setFitWidth(50);
 	  		pause = new ButtonInGame(ImageBuilder.pause());
@@ -56,6 +62,7 @@ public class MenuInGame extends Parent {
 			});
 			startSablier = new Button("Activer sablier");
 		  	finSablier = new Button("Stopper sablier");
+		  	debut = new Button("Commencer la partie");
 		  	//imgCible.setTranslateX(150);
 			//imgCible.setTranslateY(390);
 			cibleT.setTranslateX(5);
@@ -74,7 +81,9 @@ public class MenuInGame extends Parent {
 		  	startSablier.setTranslateY(100);
 		  	finSablier.setTranslateX(10);
 		  	finSablier.setTranslateY(150);
-		 	root.getChildren().addAll(cibleT,box,robotchoix,pause,play,quitter,startSablier,finSablier);
+		  	debut.setTranslateX(10);
+		  	debut.setTranslateY(250);
+		 	root.getChildren().addAll(cibleT,box,robotchoix,pause,play,quitter,startSablier,finSablier,debut,deplacement);
 			getChildren().addAll(root);
 			boxrobot.getSelectionModel().selectedItemProperty().addListener( (v,OldValue , NewValue) ->{
 		  		if(NewValue.equals("rouge")) {
@@ -127,12 +136,18 @@ public class MenuInGame extends Parent {
 		public ButtonInGame getPause() {
 			return pause;
 		}
+		public Button getDebutPartie(){
+			return debut;
+		}
 		public ButtonInGame getQuitter() {
 			return quitter;
 		}
 
 		public Pane getroot() {
 			return root;
+		}
+		public Text getDeplacement(){
+			return this.deplacement;
 		}
 		
 }

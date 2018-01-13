@@ -8,8 +8,8 @@ public class TextBuilder {
 		}
 		public static Text titreFenetre() {
 			Text titre = new Text("Ricochet Robots");
-			titre.setFont(Font.font("game robot", 70));
-			titre.setFill(Color.WHITE);
+			titre.setFont(Font.font("game robot", 55));
+			titre.setFill(Color.RED);
 			titre.setTranslateX(300);
 			titre.setTranslateY(100);
 			return titre;
@@ -34,5 +34,20 @@ public class TextBuilder {
 			cible.setFill(Color.WHITE);
 			return cible;
 		}
+		
+		public static Text objectif(){
+			
+			Text cible= new Text("Vous avez atteint l'objectif !");
+			cible.setFont(Font.font("game robot", 18));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
+		public static Text deplacement(int i){
+			Text cible= new Text(""+i);
+			cible.setFont(Font.font("game robot", 18));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
+		
 		
 }
