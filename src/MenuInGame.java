@@ -19,9 +19,12 @@ public class MenuInGame extends Parent {
 	Button startSablier;
 	Button finSablier;
 	Button debut;
+	Button retry;
+	Button nouveau;
 	Pane root;
 	Plateau p;
 	Text deplacement;
+	Text robot;
 	ChoiceBox<String> boxrobot = new ChoiceBox<>();
 		public MenuInGame(AffichagePlateau plateau,Plateau pl) throws IOException {
 			Pane root = new Pane();
@@ -42,10 +45,16 @@ public class MenuInGame extends Parent {
 	  		//ImageView imgCible = ImageBuilder.imageCible(this.plateau.getPlateau().getObjectif());
 	  		Text cibleT = TextBuilder.menuCible();
 	  		Text robotchoix = TextBuilder.robotchoix();
+	  		Text texteDeplacement = TextBuilder.texteDeplacement();
+	  		texteDeplacement.setTranslateX(5);
+			texteDeplacement.setTranslateY(230);
 	  		deplacement = TextBuilder.deplacement(p.getNbDeplacement());
-			deplacement.setTranslateX(5);
-			deplacement.setTranslateY(300);
-		
+			deplacement.setTranslateX(250);
+			deplacement.setTranslateY(230);
+			
+			robot = TextBuilder.robotSelection();
+			robot.setTranslateX(5);
+			robot.setTranslateY(600);
 			//imgCible.setFitHeight(50);
 			//imgCible.setFitWidth(50);
 	  		pause = new ButtonInGame(ImageBuilder.pause());
@@ -63,6 +72,7 @@ public class MenuInGame extends Parent {
 			startSablier = new Button("Activer sablier");
 		  	finSablier = new Button("Stopper sablier");
 		  	debut = new Button("Commencer la partie");
+		  	retry = new Button("Réessayer");
 		  	//imgCible.setTranslateX(150);
 			//imgCible.setTranslateY(390);
 			cibleT.setTranslateX(5);
@@ -83,7 +93,9 @@ public class MenuInGame extends Parent {
 		  	finSablier.setTranslateY(150);
 		  	debut.setTranslateX(10);
 		  	debut.setTranslateY(250);
-		 	root.getChildren().addAll(cibleT,box,robotchoix,pause,play,quitter,startSablier,finSablier,debut,deplacement);
+		  	retry.setTranslateX(10);
+		  	retry.setTranslateY(300);
+		 	root.getChildren().addAll(cibleT,box,robotchoix,pause,play,quitter,startSablier,finSablier,debut,deplacement,texteDeplacement,robot,retry);
 			getChildren().addAll(root);
 			boxrobot.getSelectionModel().selectedItemProperty().addListener( (v,OldValue , NewValue) ->{
 		  		if(NewValue.equals("rouge")) {
@@ -93,6 +105,8 @@ public class MenuInGame extends Parent {
             		plateau.getAffCase(p.getVert().getCoordonneeY(),p.getVert().getCoordonneeX()).colorerDerniereCase(p.getVert());
             		plateau.getAffCase(p.getJaune().getCoordonneeY(),p.getJaune().getCoordonneeX()).colorerDerniereCase(p.getJaune());
             		plateau.getAffCase(p.getBleu().getCoordonneeY(),p.getBleu().getCoordonneeX()).colorerDerniereCase(p.getBleu());
+            		robot.setText("Vous avez sélectionner le robot rouge");
+            		
 		  		}
 		  		else if (NewValue.equals("bleu")) {
 		  			System.out.println("vous avez sï¿½lectionner le robot bleu.");
@@ -101,6 +115,7 @@ public class MenuInGame extends Parent {
             		plateau.getAffCase(p.getVert().getCoordonneeY(),p.getVert().getCoordonneeX()).colorerDerniereCase(p.getVert());
             		plateau.getAffCase(p.getJaune().getCoordonneeY(),p.getJaune().getCoordonneeX()).colorerDerniereCase(p.getJaune());
             		plateau.getAffCase(p.getRouge().getCoordonneeY(),p.getRouge().getCoordonneeX()).colorerDerniereCase(p.getRouge());
+            		robot.setText("Vous avez sélectionner le robot bleu");
 		  		}
 		  		else if (NewValue.equals("vert")) {
 		  			System.out.println("vous avez sï¿½lectionner le robot vert.");
@@ -109,6 +124,7 @@ public class MenuInGame extends Parent {
             		plateau.getAffCase(p.getRouge().getCoordonneeY(),p.getRouge().getCoordonneeX()).colorerDerniereCase(p.getRouge());
             		plateau.getAffCase(p.getJaune().getCoordonneeY(),p.getJaune().getCoordonneeX()).colorerDerniereCase(p.getJaune());
             		plateau.getAffCase(p.getBleu().getCoordonneeY(),p.getBleu().getCoordonneeX()).colorerDerniereCase(p.getBleu());
+            		robot.setText("Vous avez sélectionner le robot vert");
 		  		}
 		  		else {
 		  			System.out.println("vous avez sï¿½lectionner le robot jaune.");
@@ -117,6 +133,7 @@ public class MenuInGame extends Parent {
             		plateau.getAffCase(p.getVert().getCoordonneeY(),p.getVert().getCoordonneeX()).colorerDerniereCase(p.getVert());
             		plateau.getAffCase(p.getRouge().getCoordonneeY(),p.getRouge().getCoordonneeX()).colorerDerniereCase(p.getRouge());
             		plateau.getAffCase(p.getBleu().getCoordonneeY(),p.getBleu().getCoordonneeX()).colorerDerniereCase(p.getBleu());
+            		robot.setText("Vous avez sélectionner le robot jaune");
 		  		}
 		  		});
 		}
@@ -149,5 +166,13 @@ public class MenuInGame extends Parent {
 		public Text getDeplacement(){
 			return this.deplacement;
 		}
-		
+		public Text getSelection(){
+			return this.robot;
+		}
+		public Button getRetry(){
+			return retry;
+		}
+		public Button getNouveauTry(){
+			return nouveau;
+		}
 }

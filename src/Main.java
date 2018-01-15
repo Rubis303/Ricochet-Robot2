@@ -37,7 +37,7 @@ public class Main extends Application {
 			plateau.setTranslateY(100);
 			//POSITIONNE ET AFFICHE TITRE ETC
 	  		Text titre = TextBuilder.titreFenetre();
-			titre.setTranslateX(380);//700
+			titre.setTranslateX(105);//700
 			titre.setTranslateY(80);//100
 			imgV.setFitHeight(1080);
 			imgV.setFitWidth(1920);

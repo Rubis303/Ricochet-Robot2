@@ -8,11 +8,17 @@ public class Plateau {
 	private Robot jaune = new Robot(Color.YELLOW);
 	private Robot vert = new Robot(Color.GREEN);
 	private Robot bleu = new Robot(Color.BLUE);
-	private Robot selection= new Robot(Color.WHITE);
+	private Robot selection= new Robot(Color.BLACK);
 	//private String objectif;
 	private Case objectif;
-	private int nbDeplacement = 1;
+	private int nbDeplacement = 0;
 	private Color c;
+	private int[][] robotEmplacement;
+	private static int lower=1;
+	private static int higher=17;
+
+	private ArrayList<Case> cible;
+	private int compteurPoint = 0;
 
 	public Plateau() {
 		plateau = new Case[16][16];
@@ -21,7 +27,9 @@ public class Plateau {
 				plateau[i][j] = new Case(i,j);
 			}
 		}
-		
+		//cible =new Case[17];
+		cible=new ArrayList<Case>();
+		robotEmplacement=new int[4][2];
 
 		// Création des murs et cibles
 		plateau[8][7].casePleine();
@@ -83,7 +91,38 @@ public class Plateau {
 		plateau[0][0].ajoutRobot(jaune);
 		plateau[6][12].ajoutRobot(vert);
 		
+	
+		robotEmplacement[0][0]=this.getRouge().getCoordonneeX();
+		robotEmplacement[0][1]=this.getRouge().getCoordonneeY();
 		
+		robotEmplacement[1][0]=this.getBleu().getCoordonneeX();
+		robotEmplacement[1][1]=this.getBleu().getCoordonneeY();
+		
+		robotEmplacement[2][0]=this.getVert().getCoordonneeX();
+		robotEmplacement[2][1]=this.getVert().getCoordonneeY();
+		
+		robotEmplacement[3][0]=this.getJaune().getCoordonneeX();
+		robotEmplacement[3][1]=this.getJaune().getCoordonneeY();
+		
+		cible.add(plateau[12][14]);
+		cible.add(plateau[4][13]);
+		cible.add(plateau[2][12]);
+		cible.add(plateau[9][12]);
+		cible.add(plateau[5][11]);
+		cible.add(plateau[14][11]);
+		cible.add(plateau[3][10]);
+		cible.add(plateau[11][9]);
+		cible.add(plateau[1][6]);
+		cible.add(plateau[6][5]);
+		cible.add(plateau[10][5]);
+		cible.add(plateau[3][4]);
+		cible.add(plateau[14][4]);
+		cible.add(plateau[9][3]);
+		cible.add(plateau[7][2]);
+		cible.add(plateau[5][1]);
+		cible.add(plateau[12][1]);
+				
+
 		for(int i=0;i<16;i++){  //Limitation Plateau
 			plateau[i][0].setMurhaut(true);
 			plateau[i][15].setMurbas(true);
@@ -91,16 +130,24 @@ public class Plateau {
 			plateau[15][i].setMurdroit(true);
 		}
 		
-		int lower = 1;
-		int higher = 17;
 		int random = (int)(Math.random() * (higher-lower)) + lower;
+		this.objectif=cible.get(random);
+		
 		//this.objectif = ""+random;
-		this.objectif = plateau[5][1];
-		//System.out.println(this.objectif);
+		//
 
 	}
-	public void setCaseObj(String s){
-		
+	public void setCaseObj(){
+		Case obj=getObjectif();
+		cible.remove(obj);
+		if(higher<=1){
+			this.objectif=cible.get(0);
+		}
+		else{
+			higher--;
+			int random = (int)(Math.random() * (higher-lower)) + lower;
+			this.objectif=cible.get(random);
+		}
 	}
 	public Robot getSelection() {
 		return this.selection;
@@ -109,6 +156,13 @@ public class Plateau {
 		 this.selection = r;
 
 	}
+	public void remiseRobot(){
+		this.getRouge().setCoordonnee(robotEmplacement[0][0],robotEmplacement[0][1]);
+		this.getBleu().setCoordonnee(robotEmplacement[1][0],robotEmplacement[1][1]);
+		this.getJaune().setCoordonnee(robotEmplacement[2][0],robotEmplacement[2][1]);
+		this.getVert().setCoordonnee(robotEmplacement[3][0],robotEmplacement[3][1]);
+	}
+	
 	public Robot[] getAllRobot() {
 		Robot[] tab = new Robot[4];
 		tab[0] = this.rouge;
@@ -140,7 +194,7 @@ public class Plateau {
     public void selectionRobotCouleur(boolean R,boolean V,boolean B,boolean J) {
     	if(R) {
     		this.selection = this.rouge;
-    		this.rouge.setColor(Color.WHITE);
+    		this.rouge.setColor(Color.BLACK);
     	}
     	else{
     		this.rouge.setColor(Color.RED);
@@ -148,21 +202,21 @@ public class Plateau {
     	}
     	if(B) {
     		this.selection = this.bleu;
-    		this.bleu.setColor(Color.WHITE);
+    		this.bleu.setColor(Color.BLACK);
 		}
     	else{
     		this.bleu.setColor(Color.BLUE);
     	}
     	if(V) {
     		this.selection = this.vert;
-    		this.vert.setColor(Color.WHITE);
+    		this.vert.setColor(Color.BLACK);
     	}
     	else{
     		this.vert.setColor(Color.GREEN);
     	}
     	if(J) {
     		this.selection = this.jaune;
-    		this.jaune.setColor(Color.WHITE);
+    		this.jaune.setColor(Color.BLACK);
     	}
     	else{
     		this.jaune.setColor(Color.YELLOW);
@@ -185,7 +239,12 @@ public int taillePlateau() {
 	public void setNbDeplacement(int nbDeplacement) {
 		this.nbDeplacement = nbDeplacement;
 	}
-	
+	public int getCompteurPoint() {
+		return compteurPoint;
+	}
+	public void setCompteurPoint(int nb) {
+		this.compteurPoint = nb;
+	}
 	
 	public Case[] checkMur(Case c) {
 		
@@ -304,11 +363,13 @@ public int taillePlateau() {
 		int coordonneY;
 		
 		if (s.equals("H")) { //HAUT
-			
-			if (r.getCoordonneeY() != 0) {
+			coordonneX = r.getCoordonneeX();
+			coordonneY = r.getCoordonneeY();
+			if (r.getCoordonneeY() != 0 && !this.getCase(coordonneX,coordonneY).isMurhaut()
+					&& !this.getCase(coordonneX,coordonneY - 1 ).isMurbas()
+					&& !this.getCase(coordonneX,coordonneY - 1).possedeUnRobot()) {
 				
-				coordonneX = r.getCoordonneeX();
-				coordonneY = r.getCoordonneeY();
+				
 				while (!this.getCase(coordonneX,coordonneY).isMurhaut()
 						&& !this.getCase(coordonneX,coordonneY - 1 ).isMurbas()
 						&& !this.getCase(coordonneX,coordonneY - 1).possedeUnRobot()) {
@@ -317,11 +378,13 @@ public int taillePlateau() {
 					affplateau.getAffCase(coordonneY,coordonneX).retirerrobot();
 					this.getCase(coordonneX,coordonneY - 1).ajoutRobot(r);
 					affplateau.getAffCase(coordonneY-1,coordonneX).colorerCase();
+					
 					if (this.getCase(coordonneX,coordonneY - 1).getCible().equals(this.getObjectif())) {
 
 						System.out.println("Vous avez atteint l'objectif avec le robot "+ r.getColor()+ " en "+ this.getNbDeplacement());
 						break;
 					}
+					
 					
 					coordonneX = r.getCoordonneeX();
 					coordonneY = r.getCoordonneeY();
@@ -333,9 +396,12 @@ public int taillePlateau() {
 			
 
 		} else if (s.equals("D")) {
-			if (r.getCoordonneeX() < this.taillePlateau() - 1) {
-				coordonneX = r.getCoordonneeX();
-				coordonneY = r.getCoordonneeY();
+			coordonneX = r.getCoordonneeX();
+			coordonneY = r.getCoordonneeY();
+			if (r.getCoordonneeX() < this.taillePlateau() - 1 && !this.getCase(coordonneX,coordonneY).isMurdroit()
+					&& !this.getCase(coordonneX + 1,coordonneY).isMurgauche()
+					&& !this.getCase( coordonneX + 1,coordonneY).possedeUnRobot()) {
+				
 				while (!this.getCase(coordonneX,coordonneY).isMurdroit()
 						&& !this.getCase(coordonneX + 1,coordonneY).isMurgauche()
 						&& !this.getCase( coordonneX + 1,coordonneY).possedeUnRobot()) {
@@ -352,19 +418,25 @@ public int taillePlateau() {
 										+ " en "
 										+ this.getNbDeplacement());
 						break;
-					}
+						}	
+					
 					coordonneX = r.getCoordonneeX();
 					coordonneY = r.getCoordonneeY();
 					
 				}
+				
 				this.setNbDeplacement(this.getNbDeplacement() + 1);
 				return this.getCase(coordonneX,coordonneY);
 			}
+			
 		
 		} else if (s.equals("G")) {
-			if (r.getCoordonneeX() != 0) {
 				coordonneX = r.getCoordonneeX();
 				coordonneY = r.getCoordonneeY();
+			if (r.getCoordonneeX() != 0 && !this.getCase( coordonneX,coordonneY).isMurgauche()
+					&& !this.getCase( coordonneX - 1,coordonneY).isMurdroit()
+					&& !this.getCase( coordonneX - 1,coordonneY).possedeUnRobot()) {
+				
 				while (!this.getCase( coordonneX,coordonneY).isMurgauche()
 						&& !this.getCase( coordonneX - 1,coordonneY).isMurdroit()
 						&& !this.getCase( coordonneX - 1,coordonneY).possedeUnRobot()) {
@@ -382,6 +454,7 @@ public int taillePlateau() {
 										+ this.getNbDeplacement());
 						break;
 					}
+					
 					coordonneX = r.getCoordonneeX();
 					coordonneY = r.getCoordonneeY();
 					
@@ -394,9 +467,12 @@ public int taillePlateau() {
 		}
 		// bas
 		else if(s.equals("B")){
-			if (r.getCoordonneeY() < this.taillePlateau() - 1) {
 				coordonneX = r.getCoordonneeX();
 				coordonneY = r.getCoordonneeY();
+			if (r.getCoordonneeY() < this.taillePlateau() - 1 && !this.getCase(coordonneX,coordonneY).isMurbas()
+					&& !this.getCase(coordonneX,coordonneY + 1).isMurhaut()
+					&& !this.getCase(coordonneX,coordonneY + 1).possedeUnRobot()) {
+				
 				while (!this.getCase(coordonneX,coordonneY).isMurbas()
 						&& !this.getCase(coordonneX,coordonneY + 1).isMurhaut()
 						&& !this.getCase(coordonneX,coordonneY + 1).possedeUnRobot()) {
@@ -415,6 +491,7 @@ public int taillePlateau() {
 										+ this.getNbDeplacement());
 						break;
 					}
+					
 					coordonneX = r.getCoordonneeX();
 					coordonneY = r.getCoordonneeY();
 					

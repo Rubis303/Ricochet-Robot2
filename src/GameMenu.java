@@ -36,9 +36,9 @@ public class GameMenu extends Parent {
 		       
 				  
 		  		root.setPrefSize(900, 700);
-				ImageView imgV = ImageBuilder.menu();
+				//ImageView imgV = ImageBuilder.menu();
 		  		VBox menu = new VBox(30);
-		  		menu.setTranslateX(450);
+		  		menu.setTranslateX(150);
 		  		menu.setTranslateY(200);
 		  		start = new Button("START");
 		  		start.setOnMouseClicked(event -> {
@@ -49,7 +49,7 @@ public class GameMenu extends Parent {
 		  		ft.play();
 		  		});
 		  		menu.getChildren().addAll(start);
-		  		root.getChildren().addAll(imgV,menu);
+		  		root.getChildren().addAll(menu);
 		  		getChildren().addAll(root);
 		  		Button option = new Button("OPTION");
 		  		option.setOnMouseClicked(event ->{

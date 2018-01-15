@@ -22,7 +22,7 @@ public class MainTest {
 	    Case tab2=p.deplacementr(p.getRouge(),"G");
 	    System.out.println(tab2.getCoordonneeX()+"  "+tab2.getCoordonneeY());*/
 	    
-		System.out.println(p.calculChemin(p.getVert()));
+		System.out.println(p.calculChemin(p.getBleu()));
 		
 	}
 }

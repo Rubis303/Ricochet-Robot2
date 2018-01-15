@@ -27,6 +27,13 @@ public class TextBuilder {
 			return cible;
 		}
 		
+		public static Text robotSelection(){
+			Text cible= new Text("Vous ne controlez aucun robot");
+			cible.setFont(Font.font("game robot", 16));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
+		
 		public static Text robotChoisi(Robot r){
 			
 			Text cible= new Text("Vous controlez le robot "+r.getColor());
@@ -49,5 +56,19 @@ public class TextBuilder {
 			return cible;
 		}
 		
+		public static Text texteDeplacement(){
+
+			Text cible= new Text("Compteur de déplacement :");
+			cible.setFont(Font.font("game robot", 18));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
+		public static Text textePoint(){
+
+			Text cible= new Text("Vous avez actuellement 0 point");
+			cible.setFont(Font.font("game robot", 18));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
 		
 }

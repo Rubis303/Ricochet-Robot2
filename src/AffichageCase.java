@@ -9,7 +9,7 @@ public class AffichageCase extends StackPane {
 		this.p = c;
 		carre = new Rectangle(55, 37);//37
 		carre.setOpacity(0);
-		carre.setFill(Color.WHITE);
+		carre.setFill(Color.BLACK);
 		setAlignment(Pos.CENTER);
 		getChildren().addAll(carre);
 	}
@@ -18,7 +18,7 @@ public class AffichageCase extends StackPane {
 			this.carre.setOpacity(1);
 			this.carre.setFill(this.p.getRobot().getColor());
 		} else {
-			this.carre.setFill(Color.WHITE);
+			this.carre.setFill(Color.BLACK);
 		}
 	}
 		
@@ -33,12 +33,12 @@ public class AffichageCase extends StackPane {
 		colorerCase();
 	}
 	public void colorerBlanc(){
-		this.carre.setFill(Color.WHITE);
+		this.carre.setFill(Color.BLACK);
 	}
 	
 	public void retirerrobot() {
 		p.retirerrobot();
-		this.carre.setFill(Color.WHITE);
+		this.carre.setFill(Color.BLACK);
 		this.carre.setOpacity(0);
 	}
 	
