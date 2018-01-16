@@ -12,7 +12,7 @@ import javafx.scene.transform.Rotate;
 public  class Button extends StackPane{
 	Text text;
 		  public Button(String name) throws IOException{
-			  final PhongMaterial material = new PhongMaterial(Color.GREY); 
+			  final PhongMaterial material = new PhongMaterial(Color.BLACK); 
 			  final Box rt = new Box(250, 30, 50);
 			 /* InputStream texture = Files.newInputStream(Paths.get("./ressources/images/fondmenu.jpg"));
 			  final Image diffuseMap = new Image(texture);

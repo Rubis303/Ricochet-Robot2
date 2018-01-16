@@ -19,6 +19,7 @@ public class Main extends Application {
         	Pane root = new Pane();
         	Timer sablier = new Timer();
         	Plateau p = new Plateau();
+    
         	//Deplacement c = new Deplacement();
         	AffichagePlateau plateau = new AffichagePlateau(p);
         	MenuInGame menuJeu = new MenuInGame(plateau,p);
@@ -45,6 +46,11 @@ public class Main extends Application {
 			// POSITIONNE LE PLATEAU SUR L'AFFICHAGE
 			plateau.setTranslateX(400); //800
 			plateau.setTranslateY(200);
+			System.out.println(p.calculChemin(p.getRouge()));
+			System.out.println(p.calculChemin(p.getBleu()));
+			System.out.println(p.calculChemin(p.getVert()));
+    		System.out.println(p.calculChemin(p.getJaune()));
+    	
 			
 			Controller controller = new Controller(p,sablier,root,plateau,gamemenu, menuJeu,titre);
 			controller.controllerMain();

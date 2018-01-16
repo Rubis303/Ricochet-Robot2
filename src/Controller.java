@@ -19,7 +19,12 @@ public class Controller {
 	Button gagner;
 	Text t1;
 	Text t2;
-	
+	Text fin;
+	Text aideTexte;
+	Button finir;
+	Button backMenu;
+	Button aide;
+	ImageView img;
 	
 		Controller(Plateau p,Timer sablier,Pane root,AffichagePlateau plateau,GameMenu menu ,MenuInGame menuJeu,Text t) throws IOException {
 			this.menuJeu = menuJeu;
@@ -33,14 +38,33 @@ public class Controller {
 			gagner.setTranslateX(10);
 		  	gagner.setTranslateY(350);
 		  	
+		  	finir = new Button("Terminer la partie");
+			finir.setTranslateX(10);
+		  	finir.setTranslateY(250);
+		  	
+		  	aide = new Button("Aide");
+			aide.setTranslateX(10);
+		  	aide.setTranslateY(540);
+		  	
+		  	aideTexte=TextBuilder.textePoint();
+			aideTexte.setTranslateX(5);
+		  	aideTexte.setTranslateY(550);
 		  	
 		  	t1=TextBuilder.objectif();
 			t1.setTranslateX(5);
-		  	t1.setTranslateY(200);
+		  	t1.setTranslateY(700);
+		  	
 		  	t2=TextBuilder.textePoint();
 			t2.setTranslateX(5);
 		  	t2.setTranslateY(650);
+		  	
+		  	fin=TextBuilder.fin();
+			fin.setTranslateX(100);
+		  	fin.setTranslateY(200);
 
+		  	backMenu = new Button("Retour au Menu");
+			backMenu.setTranslateX(200);
+		  	backMenu.setTranslateY(250);
 		  	
 		}
 		public void controllerMain(){
@@ -122,6 +146,7 @@ public class Controller {
             		System.out.println("je me déplace vers la gauche");
 						//plateau.getPlateau().deplacementgauche();
             		 p.deplacementr(p.getSelection(),plateau,"G");
+            		 
             		 try {
 						this.afficherGagner();
 					} catch (IOException e) {
@@ -147,17 +172,18 @@ public class Controller {
 		  			sablier.checkTimer();
 		  		});
 	  		menuJeu.getDebutPartie().setOnMouseClicked(event ->{
-	  			menuJeu.getDebutPartie().getText().setText("Partie en cours");
-	  			retry();
+	  			menuJeu.getDebutPartie().setDisable(true);
+  			root.getChildren().addAll(finir,aide);
+	  			p.setCompteurPoint(0);
 	  			
 	  			try {
-					afficherObjectif();
+	  				img=afficherObjectif();
+	  				
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-	  			
-	  			
+
 	  		});
 	  		
 	  		menuJeu.getRetry().setOnMouseClicked(event ->{
@@ -165,6 +191,7 @@ public class Controller {
 	  		});
 	  		
 	  		gagner.setOnMouseClicked(event ->{
+	  			root.getChildren().removeAll(img,aide,aideTexte);
 	  			gagner.setDisable(true);
 	  			if(p.getCase(p.getSelection().getCoordonneeX(),p.getSelection().getCoordonneeY()).equals(p.getObjectif())){
 	  				if(p.getCompteurPoint()>0){
@@ -172,14 +199,15 @@ public class Controller {
 	  				}
 	  				p.setCompteurPoint(p.getCompteurPoint()+1);
 	  				t2.setText("Vous avez actuellement "+p.getCompteurPoint()+" points");
-	  				root.getChildren().addAll(t2);
+	  				root.getChildren().addAll(t2,aide);
 	  				}
 	  			
 	  			retry();
 	  			root.getChildren().removeAll(t1,gagner);
 	  			p.setCaseObj();
 	  			try {
-	  				afficherObjectif();
+	  				img=afficherObjectif();
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -187,26 +215,71 @@ public class Controller {
 	  			
 	  			
 	  		});
-		}
+	  		
+	  		finir.setOnMouseClicked(event ->{
+	  		
+	  			if(p.getCase(p.getSelection().getCoordonneeX(),p.getSelection().getCoordonneeY()).equals(p.getObjectif())){
+	  				p.setCompteurPoint(p.getCompteurPoint()+1);
+	  				p.setCaseObj();
+	  			}
+	  			retry();
+	  			menuJeu.setVisible(false);
+				plateau.setVisible(false);
+				titre.setTranslateX(150);
+				titre.setText("Fin de partie");
+				root.getChildren().removeAll(img,finir,gagner,t1,t2,aide,aideTexte);
+				fin.setText("Vous avez terminé la partie avec "+p.getCompteurPoint()+" points");
+				root.getChildren().addAll(fin,backMenu);
+				
+	  		});
+	  		
+	  		backMenu.setOnMouseClicked(event ->{
+			
+	
+	  			root.getChildren().removeAll(fin,backMenu);
+	  			
+	  			titre.setText("Ricochet Robots");
+				menu.setVisible(true);
+				menuJeu.getDebutPartie().setDisable(false);
+			    
+	  		});
+	  		
+	  		aide.setOnMouseClicked(event ->{
+				
+	  			retry();
+	  			root.getChildren().remove(aide);
+	  			Robot r=p.getChemin();
+	  			if(r!=null){
+	  				int a=p.calculChemin(r);
+	  				aideTexte.setText("Le robot "+r.getVraieCouleur()+" en "+a+" mouvements");
+	  				
+	  			}
+	  			else{
+	  				aideTexte.setText("Aucune aide disponible");
+	  				
+	  			}
+	  			root.getChildren().add(aideTexte);
+			    
+	  		});
 	  	
-	    public void afficherObjectif() throws IOException{
-	    	Case obj=p.getObjectif();
-  			String cible=obj.MaCible();
-  			try {
+		}
+		
+	    public ImageView afficherObjectif() throws IOException {
+	         	Case obj=p.getObjectif();
+  		    	String cible=obj.MaCible();
+  		 
 				ImageView imgC = ImageBuilder.imageCible(cible);
 				imgC.setFitHeight(40);//hauteur
 				imgC.setFitWidth(60);//largeur
 				imgC.setTranslateX(100); //800
 				imgC.setTranslateY(400);
 				this.root.getChildren().addAll(imgC);
+				return imgC;
 			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+  			}
 		
   			
-	    }
+	    
 	  		
 		
 		public void afficherGagner() throws IOException{

@@ -23,6 +23,8 @@ public class MainTest {
 	    System.out.println(tab2.getCoordonneeX()+"  "+tab2.getCoordonneeY());*/
 	    
 		System.out.println(p.calculChemin(p.getBleu()));
-		
+		System.out.println(p.calculChemin(p.getRouge()));
+		System.out.println(p.calculChemin(p.getJaune()));
+		System.out.println(p.calculChemin(p.getVert()));
 	}
 }

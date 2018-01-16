@@ -4,11 +4,11 @@ import javafx.scene.paint.Color;
 
 public class Plateau {
 	private Case[][] plateau;
-	private Robot rouge = new Robot(Color.RED);
-	private Robot jaune = new Robot(Color.YELLOW);
-	private Robot vert = new Robot(Color.GREEN);
-	private Robot bleu = new Robot(Color.BLUE);
-	private Robot selection= new Robot(Color.BLACK);
+	private Robot rouge = new Robot(Color.RED,"Rouge");
+	private Robot jaune = new Robot(Color.YELLOW,"Jaune");
+	private Robot vert = new Robot(Color.GREEN,"Vert");
+	private Robot bleu = new Robot(Color.BLUE,"Bleu");
+	private Robot selection= new Robot(Color.BLACK,"Blanc");
 	//private String objectif;
 	private Case objectif;
 	private int nbDeplacement = 0;
@@ -140,8 +140,9 @@ public class Plateau {
 	public void setCaseObj(){
 		Case obj=getObjectif();
 		cible.remove(obj);
-		if(higher<=1){
+		if(higher==1){
 			this.objectif=cible.get(0);
+			higher=17;
 		}
 		else{
 			higher--;
@@ -246,6 +247,48 @@ public int taillePlateau() {
 		this.compteurPoint = nb;
 	}
 	
+	public Robot getChemin(){
+		int[] tab=new int[4];
+		int min=100;
+		int robot=4;
+		Robot r;
+		tab[0]=calculChemin(this.getRouge());
+		System.out.println(tab[0]);
+		tab[1]=calculChemin(this.getBleu());
+		System.out.println(tab[1]);
+		tab[2]=calculChemin(this.getVert());
+		System.out.println(tab[2]);
+		tab[3]=calculChemin(this.getJaune());
+		System.out.println(tab[3]);
+		for(int i=0;i<=3;i++){
+			if(min>tab[i] && tab[i]!=0){
+				min=tab[i];
+				robot=i;
+			}
+		}
+		if(robot==0){
+			r=this.getRouge();
+			return r;
+		}
+		if(robot==1){
+			r=this.getBleu();
+			return r;
+		}
+		if(robot==2){
+			r=this.getVert();
+			return r;
+		}
+		if(robot==3){
+			r=this.getJaune();
+			return r;
+		}
+		else{
+			return null;
+		}
+		
+	
+	}
+	
 	public Case[] checkMur(Case c) {
 		
 		
@@ -265,7 +308,7 @@ public int taillePlateau() {
 				
 			}
 			tabCase[0]=this.getCase(coordonneX,coordonneY);
-			System.out.println(tabCase[0].getCoordonneeX()+" "+tabCase[0].getCoordonneeY());
+			//System.out.println(tabCase[0].getCoordonneeX()+" "+tabCase[0].getCoordonneeY());
 			
 			coordonneX = c.getCoordonneeX();
 			coordonneY = c.getCoordonneeY();
@@ -283,7 +326,7 @@ public int taillePlateau() {
 				
 			}
 		  tabCase[1]=this.getCase(coordonneX,coordonneY);
-		  System.out.println(tabCase[1].getCoordonneeX()+" "+tabCase[1].getCoordonneeY());
+		  //System.out.println(tabCase[1].getCoordonneeX()+" "+tabCase[1].getCoordonneeY());
 		  coordonneX = c.getCoordonneeX();
 		  coordonneY = c.getCoordonneeY();
 		  
@@ -301,7 +344,7 @@ public int taillePlateau() {
 			
 			
 			tabCase[2]=this.getCase(coordonneX,coordonneY);
-			System.out.println(tabCase[2].getCoordonneeX()+" "+tabCase[2].getCoordonneeY());
+			//System.out.println(tabCase[2].getCoordonneeX()+" "+tabCase[2].getCoordonneeY());
 			coordonneX = c.getCoordonneeX();
 			coordonneY = c.getCoordonneeY();
 		
@@ -319,14 +362,18 @@ public int taillePlateau() {
 			
 			
 		tabCase[3]=this.getCase(coordonneX,coordonneY);
-		System.out.println(tabCase[3].getCoordonneeX()+" "+tabCase[3].getCoordonneeY());
+		//System.out.println(tabCase[3].getCoordonneeX()+" "+tabCase[3].getCoordonneeY());
 		return tabCase;
 	}
 	
 	public int calculChemin(Robot r) {
 		ArrayList<Case> listeV = new ArrayList<Case>(); // ра regarder
 		ArrayList<Case> listeR = new ArrayList<Case>(); // dщjра vu
-		
+		for (int i = 0; i < plateau.length; i++) {
+			for (int j = 0; j < plateau.length; j++) {
+				plateau[i][j].setDistance(0);
+			}
+		}
 		Case courant = this.getCase(r.getCoordonneeX(),r.getCoordonneeY());
 		listeV.add(courant);
 		courant.retirerrobot();

@@ -70,5 +70,12 @@ public class TextBuilder {
 			cible.setFill(Color.WHITE);
 			return cible;
 		}
+		public static Text fin(){
+
+			Text cible= new Text("");
+			cible.setFont(Font.font("game robot", 50));
+			cible.setFill(Color.WHITE);
+			return cible;
+		}
 		
 }

@@ -4,9 +4,11 @@ public class Robot {
 	private int cY;
 	private Color color;
 	private boolean selection; 
-	public Robot(Color color) {
+	private String couleur;
+	public Robot(Color color,String c) {
 		this.selection = false;
 		this.color = color;	
+		this.couleur=c;
 	}
 	public Color getColor() {
 		return this.color;
@@ -14,6 +16,9 @@ public class Robot {
 	public void setColor(Color c){
 		this.color=c;
 
+	}
+	public String getVraieCouleur(){
+		return this.couleur;
 	}
 	public void setCoordonnee(int x,int y) {
 		cX = x;
